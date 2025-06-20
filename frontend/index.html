@@ -17,6 +17,7 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
+            border: 2px solid var(--btn-bg-2, hsla(217 100% 56% / 1));
         }
 
         .agent-name {
@@ -70,6 +71,175 @@
             gap: 10px;
             z-index: 100;
         }
+
+        .button-wrapper {
+            gap: 24px;
+            flex-wrap: nowrap;
+            flex-direction: row;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .button-wrapper {
+                flex-wrap: wrap;
+            }
+        }
+
+        .btn-donate {
+            --clr-font-main: hsla(0 0% 20% / 100);
+            --btn-bg-1: hsla(194 100% 69% / 1);
+            --btn-bg-2: hsla(217 100% 56% / 1);
+            --btn-bg-color: hsla(360 100% 100% / 1);
+            --radii: 0.5em;
+            cursor: pointer;
+            padding: 0.9em 1.4em;
+            min-width: 120px;
+            min-height: 44px;
+            font-size: var(--size, 1rem);
+            font-weight: 500;
+            transition: 0.8s;
+            background-size: 280% auto;
+            background-image: linear-gradient(
+                325deg,
+                var(--btn-bg-2) 0%,
+                var(--btn-bg-1) 55%,
+                var(--btn-bg-2) 90%
+            );
+            border: none;
+            border-radius: var(--radii);
+            color: var(--btn-bg-color);
+            box-shadow:
+                0px 0px 20px rgba(71, 184, 255, 0.5),
+                0px 5px 5px -1px rgba(58, 125, 233, 0.25),
+                inset 4px 4px 8px rgba(175, 230, 255, 0.5),
+                inset -4px -4px 8px rgba(19, 95, 216, 0.35);
+            }
+
+        .btn-donate:hover {
+            background-position: right top;
+            }
+
+        .btn-donate:is(:focus, :focus-visible, :active) {
+            outline: none;
+            box-shadow:
+                0 0 0 3px var(--btn-bg-color),
+                0 0 0 6px var(--btn-bg-2);
+            }
+
+        @media (prefers-reduced-motion: reduce) {
+        .btn-donate {
+            transition: linear;
+            }
+        }
+
+        /* Memastikan warna teks tetap putih saat di-hover atau fokus */
+        a.btn-donate:hover, a.btn-donate:focus, a.btn-donate:active, a.btn-outline:hover, a.btn-outline:focus, a.btn-outline:active {
+            color: #fff; /* Paksa warna teks tetap putih */
+            text-decoration: none; /* Hilangkan garis bawah jika muncul */
+            outline: none; /* Hilangkan outline biru saat fokus */
+        }
+
+        /* Khusus untuk mobile browser (Safari/Chrome) untuk menghilangkan highlight biru/abu-abu saat disentuh */
+        a.btn-donate, a.btn-outline {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* GAYA BARU UNTUK TOMBOL OUTLINE DENGAN ANIMASI */
+
+        .btn-outline {
+            /* Properti dasar untuk mencocokkan ukuran & bentuk */
+            padding: 0.9em 1.4em;
+            min-width: 120px;
+            min-height: 44px;
+            font-size: var(--size, 1rem);
+            font-weight: 500;
+            border-radius: var(--radii, 0.5em);
+            cursor: pointer;
+            
+            /* Properti PENTING untuk animasi */
+            position: relative; /* Diperlukan untuk posisi absolut pseudo-element ::before */
+            overflow: hidden;  /* Menyembunyikan kilatan cahaya yang keluar dari tombol */
+            
+            /* Gaya awal (outline) */
+            background: transparent;
+            color: #fff;
+            border: 2px solid var(--btn-bg-2, hsla(217 100% 56% / 1)); /* Border dengan warna biru */
+            box-shadow: 0 0 0 0 transparent; /* Awalnya tidak ada shadow */
+
+            /* Transisi */
+            -webkit-transition: all 0.2s ease-in;
+            -moz-transition: all 0.2s ease-in;
+            transition: all 0.2s ease-in;
+        }
+
+        .btn-outline:hover {
+            /* Gaya saat di-hover: Latar belakang menjadi gradien seperti .btn-donate */
+            background-size: 280% auto;
+            background-image: linear-gradient(
+                325deg,
+                var(--btn-bg-2) 0%,
+                var(--btn-bg-1) 55%,
+                var(--btn-bg-2) 90%
+            );
+            /* box-shadow: 0px 0px 30px 5px rgba(71, 184, 255, 0.6);  */
+            /* border-color: transparent; */
+            
+            -webkit-transition: all 0.2s ease-out;
+            -moz-transition: all 0.2s ease-out;
+            transition: all 0.2s ease-out;
+        }
+
+        /* Memulai animasi kilatan cahaya saat hover */
+        .btn-outline:hover::before {
+            -webkit-animation: sh02 0.5s 0s linear;
+            -moz-animation: sh02 0.5s 0s linear;
+            animation: sh02 0.5s 0s linear;
+        }
+
+        /* Mendefinisikan elemen kilatan cahaya (pseudo-element) */
+        .btn-outline::before {
+            content: '';
+            display: block;
+            width: 0px;
+            height: 86%;
+            position: absolute;
+            top: 7%;
+            left: 0%;
+            opacity: 0;
+            background: #fff;
+            box-shadow: 0 0 50px 30px #fff;
+            -webkit-transform: skewX(-20deg);
+            -moz-transform: skewX(-20deg);
+            -ms-transform: skewX(-20deg);
+            -o-transform: skewX(-20deg);
+            transform: skewX(-20deg);
+        }
+
+        /* Menghilangkan shadow saat tombol ditekan (active) */
+        .btn-outline:active {
+            box-shadow: 0 0 0 0 transparent;
+            -webkit-transition: box-shadow 0.2s ease-in;
+            -moz-transition: box-shadow 0.2s ease-in;
+            transition: box-shadow 0.2s ease-in;
+        }
+
+        /* Keyframes untuk animasi kilatan cahaya (TIDAK PERLU DIUBAH) */
+        @keyframes sh02 {
+            from {
+                opacity: 0;
+                left: 0%;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+                left: 100%;
+            }
+        }
+
     </style>
 </head>
 
@@ -136,21 +306,30 @@
     <section class="landing">
         <div class="max-w-5xl mx-auto text-center">
             <h1 class="text-4xl font-extrabold mx-auto lg:text-7xl">
-                Say Goodbye to <br>
+                🤖 AI Scholarship <br>
                 <span
-                    style="background-image:linear-gradient(to right, #9867F0, #ED4E50); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Hours
-                    of Research</span>
+                    style="background-image:linear-gradient(to right, #3c80ff, #cdefff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Search Assistant Agent</span>
             </h1>
             <p class="max-w-6xl mx-auto text-gray-600 mt-8" style="font-size:20px">
-                Say Hello to <b>GPT Researcher</b>, your AI mate for rapid insights and comprehensive research. <br>
-                GPT Researcher takes care of everything from accurate source gathering and organization of research results to generation of customized reports with citations.
+                Struggling to find scholarships? Let our AI be your free, savvy search guide to success! <br>
+                <b>Scholagent</b> delivers accurate, customized scholarship reports—more precise than manual searches.
             </p>
-            <a href="#form" class="btn btn-primary">Start Researching</a>
+            <!-- <a href="#form" class="btn btn-primary">Start Researching</a> -->
+            <!-- Buttons -->
+            <div class="mt-8 d-flex justify-content-center align-items-center button-wrapper">
+                <a href="#form" class="btn-donate">
+                    Start Researching
+                </a>
+                <a href="https://github.com/Laoode" target="_blank"
+                   class="btn-outline">
+                    View on GitHub
+                </a>
+            </div>
         </div>
     </section>
 
     <main class="container" id="form">
-        <div class="agent-item"><img src="/static/gptr-logo.png" class="avatar" alt="Auto Agent"></div>
+        <div class="agent-item"><img src="/static/Scholagent.png" class="avatar" alt="Auto Agent"></div>
         <form method="POST" class="mt-3" id="researchForm">
             <div class="form-group">
                 <label for="task" class="agent-question">What would you like me to research next?</label>
